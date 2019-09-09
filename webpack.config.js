@@ -1,11 +1,11 @@
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const NunjucksWebpackPlugin = require("nunjucks-webpack-plugin");
 const ExtraWatchWebpackPlugin = require("extra-watch-webpack-plugin");
-const ExtractTextWebpsckPlugin = require("extract-text-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const path = require("path");
 const templates = require("./webpackpages.js");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = env => {
   const devMode = !env || !env.production;
@@ -43,27 +43,36 @@ module.exports = env => {
         },
         {
           test: /\.scss$/,
-          use: ExtractTextWebpsckPlugin.extract({
-            fallback: "style-loader",
-            use: [
-              {
-                loader: "css-loader",
-                options: { sourceMap: true }
-              },
-              {
-                loader: "sass-loader",
-                options: { sourceMap: true }
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: "../"
               }
-            ]
-          })
+            },
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: "sass-loader",
+              options: { sourceMap: true }
+            }
+          ]
         },
         {
-          test: /\.(png|jpg|gif|svg)$/,
-          exclude: "/fonts/",
-          use: ["url-loader"]
+          test: /\.(png|jpe?g|gif|svg)$/i,
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "images"
+          }
         },
         {
-          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          test: /\.(woff(2)?|ttf|eot)$/,
+          exclude: "/images/",
           use: [
             {
               loader: "file-loader",
@@ -108,7 +117,11 @@ module.exports = env => {
           copyUnmodified: true
         }
       ),
-      new ExtractTextWebpsckPlugin("styles/main.css")
+      new MiniCssExtractPlugin({
+        filename: "styles/main.css",
+        chunkFilename: "styles/main.css"
+      })
+      // new ExtractTextWebpsckPlugin("styles/main.css"),
     ],
     optimization: {
       minimizer: [new OptimizeCssAssetsPlugin(), new UglifyJsPlugin()]
