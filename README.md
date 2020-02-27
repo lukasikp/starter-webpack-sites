@@ -26,25 +26,25 @@ With yarn:
 ## Folder structure
 
 ```
-├── _build/              * built project
-├── fonts/               * fonts and icon fonts used in the project
-├── images/              * images used in the project
-├── media/               * other media files that can be uploaded by the user or admin (documents, videos, etc.)
+├── _build/
+├── fonts/
+├── images/
+├── media/
 ├── scripts/
-|   ├── site.js          * contains Site class with find and parseContent methods
-|   ├── components/      * all elements in the website should be divided into independent modules, so all scripts for modules should be defined in separate files in this directory
-|   ├── polyfills/       * fill the gap between the browser and technology
-|   ├── utils/           * contains common functions
-|   └── vendors/         * scripts required by the external libraries, loaded at each sites
-|   └── outer/           * scripts required by the external libraries, copied to _build, not compiled to the main js file
+|   ├── site.js
+|   ├── components/
+|   ├── polyfills/
+|   ├── utils/
+|   └── vendors/
+|   └── outer/
 ├── styles/
-|   ├── main.scss        * only imports of partial files described below
-|   ├── base/            * all base styles of the website
-|   ├── components/      * all elements in the website should be divided into independent modules, so all styles for modules should be defined in separate files in this directory
-|   ├── layout/          * styles related with the main elements of the website eg.: footer, header, grid, forms, wysiwyg editor
-|   ├── pages/           * styles needed by specific sub page if it can't be put into module
-|   ├── utils/           * contains mixins and variables
-|   └── vendors/         * all styles required by the external libraries
-|   └── outer/           * all styles required by the external libraries, copied to _build, not compiled to the main css file
-└── templates            * HTML templates
+|   ├── main.scss
+|   ├── base/
+|   ├── components/
+|   ├── layout/
+|   ├── pages/
+|   ├── utils/
+|   └── vendors/
+|   └── outer/
+└── templates
 ```
